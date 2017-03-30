@@ -14,6 +14,7 @@
 		6D3E59191E8D1DA3009B6B38 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D3E59171E8D1DA3009B6B38 /* LaunchScreen.storyboard */; };
 		FE6D88CD1E8D2E29007B469D /* ValidateFieldDemoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE6D88CC1E8D2E29007B469D /* ValidateFieldDemoViewController.xib */; };
 		FE6D88D41E8D3053007B469D /* ValidationFieldDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6D88D31E8D3053007B469D /* ValidationFieldDemoView.swift */; };
+		FE6D88D71E8D3659007B469D /* StringValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6D88D61E8D3659007B469D /* StringValidation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		6D3E591A1E8D1DA3009B6B38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FE6D88CC1E8D2E29007B469D /* ValidateFieldDemoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ValidateFieldDemoViewController.xib; sourceTree = "<group>"; };
 		FE6D88D31E8D3053007B469D /* ValidationFieldDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationFieldDemoView.swift; sourceTree = "<group>"; };
+		FE6D88D61E8D3659007B469D /* StringValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringValidation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 		6D3E590D1E8D1DA3009B6B38 /* FormValidations */ = {
 			isa = PBXGroup;
 			children = (
+				FE6D88D51E8D3633007B469D /* TextFiledValidation */,
 				FE6D88CA1E8D2DB4007B469D /* Demo */,
 				6D3E590E1E8D1DA3009B6B38 /* AppDelegate.swift */,
 				6D3E59101E8D1DA3009B6B38 /* ViewController.swift */,
@@ -84,6 +87,14 @@
 				FE6D88D31E8D3053007B469D /* ValidationFieldDemoView.swift */,
 			);
 			name = ValidationField;
+			sourceTree = "<group>";
+		};
+		FE6D88D51E8D3633007B469D /* TextFiledValidation */ = {
+			isa = PBXGroup;
+			children = (
+				FE6D88D61E8D3659007B469D /* StringValidation.swift */,
+			);
+			name = TextFiledValidation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -162,6 +173,7 @@
 			files = (
 				6D3E59111E8D1DA3009B6B38 /* ViewController.swift in Sources */,
 				6D3E590F1E8D1DA3009B6B38 /* AppDelegate.swift in Sources */,
+				FE6D88D71E8D3659007B469D /* StringValidation.swift in Sources */,
 				FE6D88D41E8D3053007B469D /* ValidationFieldDemoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
