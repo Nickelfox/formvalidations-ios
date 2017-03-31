@@ -116,21 +116,21 @@ extension String {
 //    return 0
 //}
 
-func extractDigits(from string: String) -> String {
-    var strippedString = String(capacity: (string.characters.count ?? 0))
-    var scanner = Scanner(string: string)
-    var numbers = CharacterSet(charactersInString: "0123456789")
-    while scanner.isAtEnd() == false {
-        var buffer: String
-        if scanner.scanCharacters(numbers, intoString: buffer) {
-            strippedString += buffer
-        }
-        else {
-            scanner.scanLocation = (scanner.scanLocation + 1)
-        }
-    }
-    return strippedString
-}
+//func extractDigits(from string: String) -> String {
+//    var strippedString = String(capacity: (string.characters.count ?? 0))
+//    var scanner = Scanner(string: string)
+//    var numbers = CharacterSet(charactersInString: "0123456789")
+//    while scanner.isAtEnd() == false {
+//        var buffer: String
+//        if scanner.scanCharacters(numbers, intoString: buffer) {
+//            strippedString += buffer
+//        }
+//        else {
+//            scanner.scanLocation = (scanner.scanLocation + 1)
+//        }
+//    }
+//    return strippedString
+//}
 
 
 
