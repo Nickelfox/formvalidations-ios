@@ -9,6 +9,7 @@
 import Foundation
 
 let alphabeticRegx = "^[A-z]+$"
+
 let alphaNumericRegx = "[a-zA-Z0-9\\s]"
 let emailRegx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
 
