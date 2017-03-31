@@ -94,43 +94,72 @@ extension String {
     }
     
     func isValidCreditCardNumber () -> Bool {
-        let digitString = self.characters.count
-        if digitString < 12 || digitString > 20 {
+        let digitString = extractDigits(from: self)
+        if digitString.characters.count < 12 || digitString.characters.count > 20 {
             return false
         }
-        //let verification: Int = luhnAlgorithm(self)
-        return false
+        let verification: Int = luhnAlgorithm(digitString)
+        var range = NSRange()
+        range.location = digitString.characters.count - 1
+        range.length = 1
+        var verificationChar = unichar()
+        (digitString as NSString).getCharacters(&verificationChar, range: range)
+        return unicharTo(int: verificationChar) == verification
     }
     
-    
-    
+    func isValidCardVerificationCode() -> Bool {
+        var digitString = extractDigits(from: self)
+        let digitStringLength = digitString.characters.count
+        if (self.characters.count == digitStringLength) && (digitStringLength == 3 || digitStringLength == 4) {
+            return true
+        }
+        return false
+    }
 }
 
-//func luhnAlgorithm (_ cardNumber: String) -> Int {
-//    let length: Int = (cardNumber.characters.count) - 1
-//    let buffer = [unichar](repeating: unichar(), count: length)
-//    var range = NSRange()
-//    range.location = 0
-//    range.length = length
-//    cardNumber
-//    return 0
-//}
+//MARK: Helper Methods
 
-//func extractDigits(from string: String) -> String {
-//    var strippedString = String(capacity: (string.characters.count ?? 0))
-//    var scanner = Scanner(string: string)
-//    var numbers = CharacterSet(charactersInString: "0123456789")
-//    while scanner.isAtEnd() == false {
-//        var buffer: String
-//        if scanner.scanCharacters(numbers, intoString: buffer) {
-//            strippedString += buffer
-//        }
-//        else {
-//            scanner.scanLocation = (scanner.scanLocation + 1)
-//        }
-//    }
-//    return strippedString
-//}
+func unicharTo(int value: unichar) -> Int {
+    return Int(value) - .allZeros
+}
+
+func luhnAlgorithm (_ cardNumber: String) -> Int {
+    let length: Int = (cardNumber.characters.count) - 1
+    let buffer = [unichar](repeating: unichar(), count: length)
+    var range = NSRange()
+    range.location = 0
+    range.length = length
+    (cardNumber as NSString).getCharacters(UnsafeMutablePointer(mutating: buffer), range: range)
+    var sum: Int = 0
+    var doubleDigit: Bool = true
+    var i = length - 1
+    while i >= 0 {
+        var value: Int = unicharTo(int: buffer[i])
+        if doubleDigit {
+            value *= 2
+            value = value/10 + value%10
+        }
+        sum += value
+        doubleDigit = !doubleDigit
+        i -= 1
+    }
+    return (10 - (sum%10))%10
+}
+
+func extractDigits(from string: String) -> String {
+    var strippedString = String()
+    let scanner = Scanner(string: string)
+    let numbers = CharacterSet(charactersIn: "0123456789")
+    while scanner.isAtEnd == false {
+        var buffer = NSString()
+        if scanner.scanCharacters(from: numbers, into: AutoreleasingUnsafeMutablePointer(&buffer)) {
+            strippedString += buffer as String
+        } else {
+            scanner.scanLocation += 1
+        }
+    }
+    return strippedString
+}
 
 
 
