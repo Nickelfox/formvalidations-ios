@@ -10,14 +10,19 @@ import UIKit
 
 class ValidationFieldDemoView: UIView {
 
-    @IBOutlet var validationField: UITextField!
+    @IBOutlet var validationField: ValidationField!
 
     @IBAction func handleValidateTapped(_ sender: Any) {
-        
+        //var validator = StringValidator(withSelector: #selector(validationField.text?.isValidEmail), withErrorMessage: "Invalid Email")
     }
     
     @IBAction func handleResetTapped(_ sender: Any) {
         
+    }
+    
+    func validateEmail() {
+        let emailValidator = StringValidator(withSelector: #selector(validationField.text?.isValidEmail()), withErrorMessage: "Invalid Email")
+        validationField.validator = emailValidator
     }
 
 }

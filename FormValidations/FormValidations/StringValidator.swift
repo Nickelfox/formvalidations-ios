@@ -18,16 +18,25 @@ class StringValidator: NSObject {
         self.errorMessage = errorMessage
     }
     
-    func validateString(_ string: NSString, withErrorMessage errorMessage: String) {
-        var isInputValid: Bool
-        var validSelector: Bool = string.responds(to: validationSelector)
+    func validateString(_ string: NSString, withErrorMessage errorMessage: inout String) -> Bool {
+        var isInputValid: Bool = false
+        let validSelector: Bool = string.responds(to: validationSelector)
         if validSelector {
-            //var methodSignature: NSMethodSignature? = instanci
+            isInputValid = (self.perform(validationSelector, with: string) != nil)
+            if isInputValid {
+                if self.errorMessage.isNonEmpty() {
+                    errorMessage = self.errorMessage
+                } else {
+                    errorMessage = "Invalid Input"
+                }
+            }
+        } else {
+            errorMessage = "Invalid validation selector"
         }
+        return isInputValid
     }
-    
 }
-    func test() {
-        let selector: Selector = Selector(stringLiteral: "dismiss")
-
-    }
+//    func test() {
+//        let selector: Selector = Selector(stringLiteral: "dismiss")
+//
+//    }

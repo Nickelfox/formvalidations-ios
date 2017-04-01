@@ -10,6 +10,7 @@ import UIKit
 import QuartzCore
 
 class ValidationField: UITextField {
+    var validator: StringValidator?
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         //initialize()
@@ -21,25 +22,42 @@ class ValidationField: UITextField {
     }
     
     //MARK: Notification
-    let UITextFieldTextDidBeginEditingNotification: NSNotification.Name
-    let UITextFieldTextDidChangeNotification: NSNotification.Name
-    let UITextFieldTextDidEndEditingNotification: NSNotification.Name
+    static let UITextFieldTextDidBeginEditingNotification = Notification.Name("UITextFieldTextDidBeginEditingNotification")
+    static let UITextFieldTextDidChangeNotification = Notification.Name("UITextFieldTextDidChangeNotification")
+    static let UITextFieldTextDidEndEditingNotification = Notification.Name("UITextFieldTextDidEndEditingNotification")
     
     func initialize() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.handleTextFieldDidBeginEditing) , name: UITextFieldTextDidBeginEditingNotification, object: self)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.handleTextFieldDidBeginEditing) , name: ValidationField.UITextFieldTextDidBeginEditingNotification, object: self)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.handleTextFieldDidChange), name: UITextFieldTextDidChangeNotification, object: self)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.handleTextFieldDidChange), name: ValidationField.UITextFieldTextDidChangeNotification, object: self)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.handleTextFieldDidEndEditing), name: UITextFieldTextDidEndEditingNotification, object: self)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.handleTextFieldDidEndEditing), name: ValidationField.UITextFieldTextDidEndEditingNotification, object: self)
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
     
-    func validateInput(withError errorMessage: String) -> Bool {
-        
-        return false
+    func validateInput(withError errorMessage: inout String) -> Bool {
+        assert((validator != nil), "Validator Can't be nil")
+        //return validator?.validateString(NSString(sel, withErrorMessage: &errorMessage)
+        let text = NSString()
+        if let text = self.text {
+            self.text = text
+        }
+        return (validator?.validateString(text, withErrorMessage: &errorMessage))!
+        //return validator?.validateString( (self.text) as NSString , withErrorMessage: &errorMessage)
+    }
+    
+    func validateInputSilently() -> Bool {
+        var error = String()
+        let isValid: Bool = validateInput(withError: &error)
+        if isValid {
+            decorateForValidInput()
+        } else {
+            decorateForInvalidInput()
+        }
+        return isValid
     }
     
     //MARK: Helper Methods
