@@ -10,12 +10,18 @@ import Foundation
 
 let alphabeticRegx = "^[A-z]+$"
 
-let alphaNumericRegx = "[a-zA-Z0-9\\s]"
+let alphaNumericRegx = "[a-zA-Z0-9]+$"
+let numericRegx = "[0-9]+$"
 let emailRegx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
 
-extension String {
+
+extension NSString {
+//    func isNonEmpty() -> Bool {
+//        return (self.characters.count) != 0
+//    }
+    
     func isNonEmpty() -> Bool {
-        return (self.characters.count) != 0
+        return (self.length) != 0
     }
     
     func isAlphabetic() -> Bool {
@@ -29,8 +35,8 @@ extension String {
     
     func isNumeric() -> Bool {
         if isNonEmpty() {
-            let notDigits = CharacterSet.decimalDigits.inverted
-            return ((self as String).rangeOfCharacter(from: notDigits) != nil)
+            let numericTest = NSPredicate(format: "SELF MATCHES %@", numericRegx)
+            return numericTest.evaluate(with: self)
         } else {
             return false
         }
@@ -45,17 +51,18 @@ extension String {
         }
     }
     
-    func isValidEmail() -> Bool {
+   func isValidEmail() -> Bool {
         if isNonEmpty() {
             let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegx)
             return emailTest.evaluate(with: self)
         } else {
+            print(self.isNonEmpty())
             return false
         }
     }
     
     func isValidURL() -> Bool {
-        let url: URL = URL(fileURLWithPath: self)
+        let url: URL = URL(fileURLWithPath: self as String)
         if let _ = url.scheme, let _ = url.host {
             return true
         } else {
@@ -64,11 +71,11 @@ extension String {
     }
     
     func isValidPassword() -> Bool {
-        return self.characters.count >= 6
+        return self.length >= 6
     }
     
     func isValidCreditCardExpirationDate() -> Bool {
-        if self.characters.count < 4 {
+        if self.length < 4 {
             return false
         }
         let slashIndex: NSRange = (self as NSString).range(of: "/")
@@ -95,7 +102,7 @@ extension String {
     }
     
     func isValidCreditCardNumber () -> Bool {
-        let digitString = extractDigits(from: self)
+        let digitString = extractDigits(from: self as String)
         if digitString.characters.count < 12 || digitString.characters.count > 20 {
             return false
         }
@@ -109,9 +116,9 @@ extension String {
     }
     
     func isValidCardVerificationCode() -> Bool {
-        var digitString = extractDigits(from: self)
+        var digitString = extractDigits(from: self as String)
         let digitStringLength = digitString.characters.count
-        if (self.characters.count == digitStringLength) && (digitStringLength == 3 || digitStringLength == 4) {
+        if (self.length == digitStringLength) && (digitStringLength == 3 || digitStringLength == 4) {
             return true
         }
         return false

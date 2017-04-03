@@ -9,16 +9,13 @@
 import UIKit
 import QuartzCore
 
+
 class ValidationField: UITextField {
     var validator: StringValidator?
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        //initialize()
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        //initialize()
+        initialize()
     }
     
     //MARK: Notification
@@ -28,9 +25,7 @@ class ValidationField: UITextField {
     
     func initialize() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.handleTextFieldDidBeginEditing) , name: ValidationField.UITextFieldTextDidBeginEditingNotification, object: self)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(self.handleTextFieldDidChange), name: ValidationField.UITextFieldTextDidChangeNotification, object: self)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(self.handleTextFieldDidEndEditing), name: ValidationField.UITextFieldTextDidEndEditingNotification, object: self)
     }
     
@@ -39,14 +34,15 @@ class ValidationField: UITextField {
     }
     
     func validateInput(withError errorMessage: inout String) -> Bool {
-        assert((validator != nil), "Validator Can't be nil")
-        //return validator?.validateString(NSString(sel, withErrorMessage: &errorMessage)
-        let text = NSString()
-        if let text = self.text {
-            self.text = text
+        //assert((validator != nil), "Validator Can't be nil")
+        if (validator == nil) {
+            return false
+        } else {
+            if let text = self.text {
+                return (validator!.validateString(text as NSString, withErrorMessage: &errorMessage))
+            }
+            return false
         }
-        return (validator?.validateString(text, withErrorMessage: &errorMessage))!
-        //return validator?.validateString( (self.text) as NSString , withErrorMessage: &errorMessage)
     }
     
     func validateInputSilently() -> Bool {
@@ -63,7 +59,7 @@ class ValidationField: UITextField {
     //MARK: Helper Methods
     
     func handleTextFieldDidBeginEditing(notification: NSNotification) {
-        
+        self.decorateForDefault()
     }
     
     func handleTextFieldDidChange(notification: NSNotification) {
@@ -71,7 +67,7 @@ class ValidationField: UITextField {
     }
     
     func handleTextFieldDidEndEditing(notification: NSNotification) {
-        
+        //let _ = self.validateInputSilently()
     }
     
     func decorateForValidInput() {
@@ -85,8 +81,8 @@ class ValidationField: UITextField {
     }
     
     func decorateForDefault() {
-        self.layer.borderColor = UIColor.clear.cgColor
-        self.layer.borderWidth = 0.0
+        self.layer.borderColor = UIColor.cyan.cgColor
+        self.layer.borderWidth = 0.5
     }
 }
 

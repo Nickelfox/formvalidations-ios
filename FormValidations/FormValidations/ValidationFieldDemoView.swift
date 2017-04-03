@@ -13,7 +13,7 @@ class ValidationFieldDemoView: UIView {
     @IBOutlet var validationField: ValidationField!
 
     @IBAction func handleValidateTapped(_ sender: Any) {
-        //var validator = StringValidator(withSelector: #selector(validationField.text?.isValidEmail), withErrorMessage: "Invalid Email")
+        validateEmail()
     }
     
     @IBAction func handleResetTapped(_ sender: Any) {
@@ -21,8 +21,13 @@ class ValidationFieldDemoView: UIView {
     }
     
     func validateEmail() {
-        let emailValidator = StringValidator(withSelector: #selector(validationField.text?.isValidEmail()), withErrorMessage: "Invalid Email")
-        validationField.validator = emailValidator
+        if let text = validationField.text {
+            let text1 = NSString.init(string: text)
+            let x  = #selector(text1.isNumeric)
+            let emailValidator = StringValidator(withSelector: x, withErrorMessage: "Invalid Email")
+            validationField.validator = emailValidator
+            let _ = validationField.validateInputSilently()
+        }
     }
 
 }
