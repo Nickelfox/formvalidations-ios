@@ -93,31 +93,32 @@ extension ValidationField: ValidationDelegate {
     }
     
     func validateInput() -> Bool {
-        var nsText: NSString = ""
-        if let text = self.text {
-            nsText = text as NSString
-        }
+        var text = String()
+            if let value = self.text {
+                text = value
+            }
+
         switch methodToCall {
         case PerformMethod.isNonEmpty.rawValue:
-            return (nsText.isNonEmpty())
+            return (text.isNonEmpty())
         case "isAlphabetic":
-            return (nsText.isAlphabetic())
+            return (text.isAlphabetic())
         case "isNumeric":
-            return (nsText.isNumeric())
+            return (text.isNumeric())
         case "isAlphaNumeric":
-            return (nsText.isAlphaNumeric())
+            return (text.isAlphaNumeric())
         case "isValidEmail":
-            return (nsText.isValidEmail())
+            return (text.isValidEmail())
         case "isValidURL":
-            return (nsText.isValidURL())
+            return (text.isValidURL())
         case "isValidPassword":
-            return (nsText.isValidPassword())
+            return (text.isValidPassword())
         case "isValidCreditCardExpirationDate":
-            return (nsText.isValidCreditCardExpirationDate())
+            return (text.isValidCreditCardExpirationDate())
         case "isValidCreditCardNumber":
-            return (nsText.isValidCreditCardNumber())
+            return (text.isValidCreditCardNumber())
         case "isValidCardVerificationCode":
-            return (nsText.isValidCardVerificationCode())
+            return (text.isValidCardVerificationCode())
         default:
             break
         }

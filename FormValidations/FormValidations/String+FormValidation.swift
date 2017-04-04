@@ -15,10 +15,10 @@ let numericRegx = "[0-9]+$"
 let emailRegx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
 
 
-extension NSString {
+extension String {
     func isNonEmpty() -> Bool {
-        //return (self.characters.count) != 0
-        return (self.length) != 0
+        return (self.characters.count) != 0
+        //return (self.length) != 0
     }
     
     func isAlphabetic() -> Bool {
@@ -68,11 +68,12 @@ extension NSString {
     }
     
     func isValidPassword() -> Bool {
-        return self.length >= 6
+        //return self.length >= 6
+        return self.characters.count >= 6
     }
     
     func isValidCreditCardExpirationDate() -> Bool {
-        if self.length < 4 {
+        if self.characters.count < 4 {
             return false
         }
         let slashIndex: NSRange = (self as NSString).range(of: "/")
@@ -102,27 +103,32 @@ extension NSString {
     }
     
     func isValidCreditCardNumber () -> Bool {
-        let digitString = extractDigits(from: self as String)
+        if !self.isNumeric() {
+            return false
+        }
+        let digitString = extractDigits(from: self)
         if digitString.characters.count < 12 || digitString.characters.count > 20 {
             return false
         }
-        let verification: Int = luhnAlgorithm(digitString)
-        var range = NSRange()
-        range.location = digitString.characters.count - 1
-        range.length = 1
-        var verificationChar = unichar()
-        (digitString as NSString).getCharacters(&verificationChar, range: range)
-        if unicharTo(int: verificationChar)%10 == verification {
-            return true
-        } else {
-            return false
-        }
+        return true
+//        let verification: Int = luhnAlgorithm(digitString)
+//        var range = NSRange()
+//        range.location = digitString.characters.count - 1
+//        range.length = 1
+//        var verificationChar = unichar()
+//        (digitString as NSString).getCharacters(&verificationChar, range: range)
+//        if unicharTo(int: verificationChar)%10 == verification {
+//            return true
+//        } else {
+//            return false
+//        }
+        
     }
     
     func isValidCardVerificationCode() -> Bool {
         var digitString = extractDigits(from: self as String)
         let digitStringLength = digitString.characters.count
-        if (self.length == digitStringLength) && (digitStringLength == 3 || digitStringLength == 4) && (digitString != "000") && (digitString != "0000") {
+        if (self.characters.count == digitStringLength) && (digitStringLength == 3 || digitStringLength == 4) && (digitString != "000") && (digitString != "0000") {
             return true
         }
         return false
