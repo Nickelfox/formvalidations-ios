@@ -52,6 +52,7 @@ class ValidationField: UITextField {
             decorateForValidInput()
         } else {
             decorateForInvalidInput()
+            print(error)
         }
         return isValid
     }
@@ -67,7 +68,7 @@ class ValidationField: UITextField {
     }
     
     func handleTextFieldDidEndEditing(notification: NSNotification) {
-        //let _ = self.validateInputSilently()
+        let _ = self.validateInputSilently()
     }
     
     func decorateForValidInput() {

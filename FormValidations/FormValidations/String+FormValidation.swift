@@ -16,11 +16,8 @@ let emailRegx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
 
 
 extension NSString {
-//    func isNonEmpty() -> Bool {
-//        return (self.characters.count) != 0
-//    }
-    
     func isNonEmpty() -> Bool {
+        //return (self.characters.count) != 0
         return (self.length) != 0
     }
     

@@ -26,7 +26,7 @@ class StringValidator: NSObject {
     func validateString(_ string: NSString, withErrorMessage errorMessage: inout String) -> Bool {
         var isInputValid: Bool = false
         isInputValid = ((string.perform(validationSelector) != nil))
-        if isInputValid {
+        if !isInputValid {
             if self.errorMessage.isNonEmpty() {
                 errorMessage = self.errorMessage
             } else {

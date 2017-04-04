@@ -15,15 +15,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-
         window = UIWindow(frame: UIScreen.main.bounds)
-        
-        
-        let validateVC = ValidationFieldDemoViewController()
-        let navigationController = UINavigationController(rootViewController: validateVC)
+        let menuVC = MenuViewController()
+        let navigationController = UINavigationController(rootViewController: menuVC)
         window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
-        
         return true
 	}
 

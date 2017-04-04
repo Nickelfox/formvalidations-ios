@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="9aE-Xm-hbQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="9aE-Xm-hbQ">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,6 +13,7 @@
         <!--Navigation Controller-->
         <scene sceneID="3co-uP-gXo">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6KL-qT-dNa" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="9aE-Xm-hbQ" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="daI-fq-w4X">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -22,9 +23,8 @@
                         <segue destination="TeO-Dg-pN3" kind="relationship" relationship="rootViewController" id="y1g-Es-QHH"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="6KL-qT-dNa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-564" y="69"/>
+            <point key="canvasLocation" x="-562" y="-179"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="EjR-4F-TaH">
