@@ -118,7 +118,6 @@ static NSString * const kEmailRegEx = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za
   NSRange range = {.location = [digitString length] - 1, .length = 1};
   unichar verificationChar;
   [digitString getCharacters:&verificationChar range:range];
-  
   return [NSString unicharToInteger:verificationChar] == verification;
 }
 

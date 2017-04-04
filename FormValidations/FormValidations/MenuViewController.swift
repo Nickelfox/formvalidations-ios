@@ -12,14 +12,15 @@ class MenuViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
     var cellId = "menuCell"
+    var nibId = "MenuViewController"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        displayView()
         setupTableView()
     }
     
     func setupTableView() {
+        displayView()
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
@@ -27,7 +28,7 @@ class MenuViewController: UIViewController {
     }
     
     func displayView() {
-        let menuView = Bundle.main.loadNibNamed("MenuViewController", owner: self, options: nil)?.first as! UIView
+        let menuView = Bundle.main.loadNibNamed(nibId, owner: self, options: nil)?.first as! UIView
         self.view = menuView
     }
 }
@@ -47,7 +48,6 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         handleRowSelected(at: indexPath)
     }
-    
     
     //MARK: Helper Methods
     

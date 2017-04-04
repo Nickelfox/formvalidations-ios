@@ -18,10 +18,6 @@ class StringValidator: NSObject {
         self.errorMessage = errorMessage
         super.init()
     }
-    
-//    class func stringValidator(with validationSelector: Selector, withErrorMessage errorMessage: String) -> StringValidator{
-//        return StringValidator(withSelector: validationSelector, withErrorMessage: errorMessage)
-//    }
 
     func validateString(_ string: NSString, withErrorMessage errorMessage: inout String) -> Bool {
         var isInputValid: Bool = false
@@ -36,3 +32,58 @@ class StringValidator: NSObject {
         return isInputValid
     }
 }
+
+//class ValidateString: NSObject, ValidationDelegate {
+//    
+//    let validationFieldDemoVC = ValidationFieldDemoViewController()
+//    
+//    override func awakeFromNib() {
+//        validationFieldDemoVC.validateStringDelegate = self
+//    }
+//    
+//    var methodToCall: String = ""
+//    func validateString(withMethod method: String, withErrorMessage: String) {
+//        methodToCall = method
+//    }
+//    
+//    enum PerformMethod: String {
+//        case isNonEmpty
+//        case isAlphabetic
+//        case isNumeric
+//        case isAlphaNumeric
+//        case isValidEmail
+//        case isValidURL
+//        case isValidPassword
+//        case isValidCreditCardExpirationDate
+//        case isValidCreditCardNumber
+//        case isValidCardVerificationCode
+//    }
+//    
+//    func validateString(_ nsText: NSString) -> Bool {
+//        switch methodToCall {
+//        case PerformMethod.isNonEmpty.rawValue:
+//            return (nsText.isNonEmpty())
+//        case "isAlphabetic":
+//            return (nsText.isAlphabetic())
+//        case "isNumeric":
+//            return (nsText.isNumeric())
+//        case "isAlphaNumeric":
+//            return (nsText.isAlphaNumeric())
+//        case "isValidEmail":
+//            return (nsText.isNonEmpty())
+//        case "isValidURL":
+//            return (nsText.isValidURL())
+//        case "isValidPassword":
+//            return (nsText.isValidPassword())
+//        case "isValidCreditCardExpirationDate":
+//            return (nsText.isValidCreditCardExpirationDate())
+//        case "isValidCreditCardNumber":
+//            return (nsText.isValidCreditCardNumber())
+//        case "isValidCardVerificationCode":
+//            return (nsText.isValidCardVerificationCode())
+//        default:
+//            break
+//        }
+//        return false
+//    }
+//}

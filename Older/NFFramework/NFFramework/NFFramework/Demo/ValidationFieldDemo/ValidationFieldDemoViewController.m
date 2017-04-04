@@ -27,7 +27,7 @@
 
 - (void)setupTextField {
   NFStringValidator *emailValidatior = [[NFStringValidator alloc] init];
-  emailValidatior.validationSelector = @selector(isValidEmail);
+  emailValidatior.validationSelector = @selector(isValidCreditCardNumber);
   emailValidatior.errorMessage = @"Invalid Email";
   self.validationField.validator = emailValidatior;
 }

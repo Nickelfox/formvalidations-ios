@@ -8,27 +8,28 @@
 
 import UIKit
 
-class ValidationFieldDemoViewController: UIViewController {
+protocol ValidationDelegate: class {
+    func validateString(withMethod method: String, withErrorMessage: String)
+}
 
+class ValidationFieldDemoViewController: UIViewController {
+    
     @IBOutlet var textToValidate: ValidationField!
+    weak var validateStringDelegate: ValidationDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        displayView()
         setupTextField()
     }
     
     func setupTextField() {
-        var nsText: NSString
-        if let text = textToValidate.text {
-            nsText = text as NSString
-        }
-        let emailValidator = StringValidator(withSelector: #selector(nsText.isValidEmail), withErrorMessage: "Invalid Email")
-        textToValidate.validator = emailValidator
+        displayView()
+        self.validateStringDelegate = self.textToValidate
+        self.validateStringDelegate?.validateString(withMethod: "isValidCreditCardNumber", withErrorMessage: "Invalid Email")
     }
     
     @IBAction func handleValidateTapped(_ sender: Any) {
-        let _ = textToValidate.validateInputSilently()
+        textToValidate.validateInputSilently()
     }
     
     @IBAction func handleResetTapped(_ sender: Any) {

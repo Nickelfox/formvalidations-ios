@@ -30,7 +30,7 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TS4-Aq-oxo">
-                    <rect key="frame" x="37" y="158" width="130" height="38"/>
+                    <rect key="frame" x="37" y="170" width="130" height="38"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="130" id="eSr-NP-Sco"/>
@@ -44,7 +44,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iJR-t4-fsF">
-                    <rect key="frame" x="197" y="158" width="140" height="38"/>
+                    <rect key="frame" x="197" y="170" width="140" height="38"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="38" id="Nbt-y3-Aet"/>
@@ -61,12 +61,12 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="4ct-lb-7p7" secondAttribute="trailing" constant="38" id="3LH-51-rGD"/>
-                <constraint firstItem="TS4-Aq-oxo" firstAttribute="top" secondItem="4ct-lb-7p7" secondAttribute="bottom" constant="20" id="DCd-dJ-t6b"/>
-                <constraint firstItem="iJR-t4-fsF" firstAttribute="top" secondItem="4ct-lb-7p7" secondAttribute="bottom" constant="20" id="Ueh-1q-mMz"/>
+                <constraint firstItem="iJR-t4-fsF" firstAttribute="top" secondItem="4ct-lb-7p7" secondAttribute="bottom" constant="32" id="Qrc-JH-3hC"/>
                 <constraint firstItem="4ct-lb-7p7" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="37" id="VK6-SY-GgN"/>
                 <constraint firstItem="4ct-lb-7p7" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="100" id="WMR-Fz-TzD"/>
                 <constraint firstItem="TS4-Aq-oxo" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="37" id="a5k-VR-gcQ"/>
                 <constraint firstAttribute="trailing" secondItem="iJR-t4-fsF" secondAttribute="trailing" constant="38" id="afK-Cf-jqk"/>
+                <constraint firstItem="TS4-Aq-oxo" firstAttribute="top" secondItem="4ct-lb-7p7" secondAttribute="bottom" constant="32" id="trg-6L-Zqz"/>
             </constraints>
             <point key="canvasLocation" x="33.5" y="53.5"/>
         </view>

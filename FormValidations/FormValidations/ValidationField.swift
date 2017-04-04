@@ -7,11 +7,13 @@
 //
 
 import UIKit
-import QuartzCore
-
 
 class ValidationField: UITextField {
+    
     var validator: StringValidator?
+    var methodToCall: String = ""
+    
+    var validationFieldDemoVC: ValidationFieldDemoViewController?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -33,32 +35,16 @@ class ValidationField: UITextField {
         NotificationCenter.default.removeObserver(self)
     }
     
-    func validateInput(withError errorMessage: inout String) -> Bool {
-        //assert((validator != nil), "Validator Can't be nil")
-        if (validator == nil) {
-            return false
-        } else {
-            if let text = self.text {
-                return (validator!.validateString(text as NSString, withErrorMessage: &errorMessage))
-            }
-            return false
-        }
-    }
-    
-    func validateInputSilently() -> Bool {
-        var error = String()
-        let isValid: Bool = validateInput(withError: &error)
+    func validateInputSilently() {
+        let isValid: Bool = validateInput()
         if isValid {
             decorateForValidInput()
         } else {
             decorateForInvalidInput()
-            print(error)
         }
-        return isValid
     }
     
     //MARK: Helper Methods
-    
     func handleTextFieldDidBeginEditing(notification: NSNotification) {
         self.decorateForDefault()
     }
@@ -68,7 +54,7 @@ class ValidationField: UITextField {
     }
     
     func handleTextFieldDidEndEditing(notification: NSNotification) {
-        let _ = self.validateInputSilently()
+        self.validateInputSilently()
     }
     
     func decorateForValidInput() {
@@ -82,8 +68,60 @@ class ValidationField: UITextField {
     }
     
     func decorateForDefault() {
-        self.layer.borderColor = UIColor.cyan.cgColor
+        self.layer.borderColor = UIColor.clear.cgColor
         self.layer.borderWidth = 0.5
+    }
+}
+
+extension ValidationField: ValidationDelegate {
+    
+    enum PerformMethod: String {
+        case isNonEmpty
+        case isAlphabetic
+        case isNumeric
+        case isAlphaNumeric
+        case isValidEmail
+        case isValidURL
+        case isValidPassword
+        case isValidCreditCardExpirationDate
+        case isValidCreditCardNumber
+        case isValidCardVerificationCode
+    }
+    
+    func validateString(withMethod method: String, withErrorMessage: String) {
+        methodToCall = method
+    }
+    
+    func validateInput() -> Bool {
+        var nsText: NSString = ""
+        if let text = self.text {
+            nsText = text as NSString
+        }
+        switch methodToCall {
+        case PerformMethod.isNonEmpty.rawValue:
+            return (nsText.isNonEmpty())
+        case "isAlphabetic":
+            return (nsText.isAlphabetic())
+        case "isNumeric":
+            return (nsText.isNumeric())
+        case "isAlphaNumeric":
+            return (nsText.isAlphaNumeric())
+        case "isValidEmail":
+            return (nsText.isValidEmail())
+        case "isValidURL":
+            return (nsText.isValidURL())
+        case "isValidPassword":
+            return (nsText.isValidPassword())
+        case "isValidCreditCardExpirationDate":
+            return (nsText.isValidCreditCardExpirationDate())
+        case "isValidCreditCardNumber":
+            return (nsText.isValidCreditCardNumber())
+        case "isValidCardVerificationCode":
+            return (nsText.isValidCardVerificationCode())
+        default:
+            break
+        }
+        return false
     }
 }
 

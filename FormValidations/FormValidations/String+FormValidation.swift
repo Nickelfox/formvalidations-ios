@@ -87,13 +87,16 @@ extension NSString {
         if let month = Int(monthString), var year = Int(yearString) {
             let currentYear: Int = Calendar.current.component(.year, from: Date())
             let currentMonth: Int = Calendar.current.component(.month, from: Date())
+            if year > 50 {
+                return false
+            }
             if yearString.characters.count <= 2 {
                 year += 2000
             }
             if year == currentYear {
-                return month >= currentMonth
+                return ((month >= currentMonth) && (month <= 12) && (month != 0))
             }
-            return year >= currentYear
+            return ((year >= currentYear) && (month <= 12) && (month != 0))
         }
         return true
     }
@@ -109,13 +112,17 @@ extension NSString {
         range.length = 1
         var verificationChar = unichar()
         (digitString as NSString).getCharacters(&verificationChar, range: range)
-        return unicharTo(int: verificationChar) == verification
+        if unicharTo(int: verificationChar)%10 == verification {
+            return true
+        } else {
+            return false
+        }
     }
     
     func isValidCardVerificationCode() -> Bool {
         var digitString = extractDigits(from: self as String)
         let digitStringLength = digitString.characters.count
-        if (self.length == digitStringLength) && (digitStringLength == 3 || digitStringLength == 4) {
+        if (self.length == digitStringLength) && (digitStringLength == 3 || digitStringLength == 4) && (digitString != "000") && (digitString != "0000") {
             return true
         }
         return false
