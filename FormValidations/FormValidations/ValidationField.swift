@@ -9,9 +9,13 @@
 import UIKit
 import QuartzCore
 
+private var textFieldDidBegainEditingNotification = "UITextFieldTextDidBeginEditingNotification"
+private var textFieldDidChangeNotification = "UITextFieldTextDidChangeNotification"
+private var textFieldTextDidEndEditingNotification = "UITextFieldTextDidEndEditingNotification"
 
 class ValidationField: UITextField {
-    var validator: StringValidator?
+    var error: String?
+    var validator: ValidationProtocol?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -19,9 +23,9 @@ class ValidationField: UITextField {
     }
     
     //MARK: Notification
-    static let UITextFieldTextDidBeginEditingNotification = Notification.Name("UITextFieldTextDidBeginEditingNotification")
-    static let UITextFieldTextDidChangeNotification = Notification.Name("UITextFieldTextDidChangeNotification")
-    static let UITextFieldTextDidEndEditingNotification = Notification.Name("UITextFieldTextDidEndEditingNotification")
+    static let UITextFieldTextDidBeginEditingNotification = Notification.Name(textFieldDidBegainEditingNotification)
+    static let UITextFieldTextDidChangeNotification = Notification.Name(textFieldDidChangeNotification)
+    static let UITextFieldTextDidEndEditingNotification = Notification.Name(textFieldTextDidEndEditingNotification)
     
     func initialize() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.handleTextFieldDidBeginEditing) , name: ValidationField.UITextFieldTextDidBeginEditingNotification, object: self)
@@ -33,28 +37,23 @@ class ValidationField: UITextField {
         NotificationCenter.default.removeObserver(self)
     }
     
-    func validateInput(withError errorMessage: inout String) -> Bool {
-        //assert((validator != nil), "Validator Can't be nil")
-        if (validator == nil) {
-            return false
-        } else {
+    func validateField() -> (Bool, String?){
+        if validator != nil {
             if let text = self.text {
-                return (validator!.validateString(text as NSString, withErrorMessage: &errorMessage))
+                return self.validator?.validate(text) ?? (true, nil)
             }
-            return false
         }
+        return (false, nil)
     }
     
-    func validateInputSilently() -> Bool {
-        var error = String()
-        let isValid: Bool = validateInput(withError: &error)
-        if isValid {
+    func validateInputSilently(){
+        let attempt:(isValid: Bool, error: String?) = validateField()
+        self.error = attempt.error
+        if attempt.isValid {
             decorateForValidInput()
         } else {
             decorateForInvalidInput()
-            print(error)
         }
-        return isValid
     }
     
     //MARK: Helper Methods
@@ -68,7 +67,7 @@ class ValidationField: UITextField {
     }
     
     func handleTextFieldDidEndEditing(notification: NSNotification) {
-        let _ = self.validateInputSilently()
+        self.validateInputSilently()
     }
     
     func decorateForValidInput() {
@@ -82,7 +81,7 @@ class ValidationField: UITextField {
     }
     
     func decorateForDefault() {
-        self.layer.borderColor = UIColor.cyan.cgColor
+        self.layer.borderColor = UIColor.clear.cgColor
         self.layer.borderWidth = 0.5
     }
 }

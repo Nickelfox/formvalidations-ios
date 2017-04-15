@@ -1,28 +1,29 @@
 //
-//  Validation.swift
+//  String + Validation.swift
 //  FormValidations
 //
-//  Created by Nickelfox on 30/03/17.
+//  Created by Vaibhav Parmar on 14/04/17.
 //  Copyright © 2017 Nickelfox. All rights reserved.
 //
 
 import Foundation
 
-let alphabeticRegx = "^[A-z]+$"
+private let alphabeticRegx = "^[A-z ]+$"
+private let alphaNumericRegx = "[a-zA-Z0-9]+$"
+private let numericRegx = "[0-9]+$"
+private let emailRegx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
+private let phoneRegx = "^\\d{10}$"
+private let passwordRegx = "^(?=.*?[A-Z]).{8,}$"
+private let pinCodeRegx = "\\d{6}"
 
-let alphaNumericRegx = "[a-zA-Z0-9]+$"
-let numericRegx = "[0-9]+$"
-let emailRegx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
-
-
-extension NSString {
+extension String {
+    
     func isNonEmpty() -> Bool {
-        //return (self.characters.count) != 0
-        return (self.length) != 0
+        return (self.characters.count) != 0
     }
     
     func isAlphabetic() -> Bool {
-        if isNonEmpty() {
+        if !isEmpty {
             let alphabeticTest = NSPredicate(format: "SELF MATCHES %@", alphabeticRegx)
             return alphabeticTest.evaluate(with: self)
         } else {
@@ -48,15 +49,15 @@ extension NSString {
         }
     }
     
-   func isValidEmail() -> Bool {
+    func isValidEmail() -> Bool {
         if isNonEmpty() {
             let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegx)
             return emailTest.evaluate(with: self)
         } else {
-            print(self.isNonEmpty())
             return false
         }
     }
+    
     
     func isValidURL() -> Bool {
         let url: URL = URL(fileURLWithPath: self as String)
@@ -68,11 +69,31 @@ extension NSString {
     }
     
     func isValidPassword() -> Bool {
-        return self.length >= 6
+        if !isEmpty {
+            let passwordTest = NSPredicate(format: "SELF MATCHES %@", passwordRegx)
+            return passwordTest.evaluate(with: self)
+        }
+        return false
+    }
+    
+    func isValidPhone() -> Bool {
+        if !isEmpty {
+            let phoneTest = NSPredicate(format: "SELF MATCHES %@", phoneRegx)
+            return phoneTest.evaluate(with: self)
+        }
+        return false
+    }
+    
+    func isValidPinCode() -> Bool {
+        if !isEmpty {
+            let pinCodeTest = NSPredicate(format: "SELF MATCHES %@", pinCodeRegx)
+            return pinCodeTest.evaluate(with: self)
+        }
+        return false
     }
     
     func isValidCreditCardExpirationDate() -> Bool {
-        if self.length < 4 {
+        if self.characters.count < 4 {
             return false
         }
         let slashIndex: NSRange = (self as NSString).range(of: "/")
@@ -91,9 +112,9 @@ extension NSString {
                 year += 2000
             }
             if year == currentYear {
-                return month >= currentMonth
+                return ((month >= currentMonth) && (month <= 12) && (month != 0))
             }
-            return year >= currentYear
+            return ((year >= currentYear) && (month <= 12) && (month != 0))
         }
         return true
     }
@@ -109,13 +130,13 @@ extension NSString {
         range.length = 1
         var verificationChar = unichar()
         (digitString as NSString).getCharacters(&verificationChar, range: range)
-        return unicharTo(int: verificationChar) == verification
+        return (unicharTo(int: verificationChar)%10) == verification
     }
     
     func isValidCardVerificationCode() -> Bool {
         var digitString = extractDigits(from: self as String)
         let digitStringLength = digitString.characters.count
-        if (self.length == digitStringLength) && (digitStringLength == 3 || digitStringLength == 4) {
+        if (self.characters.count == digitStringLength) && (digitStringLength == 3 || digitStringLength == 4) {
             return true
         }
         return false
@@ -165,6 +186,3 @@ func extractDigits(from string: String) -> String {
     }
     return strippedString
 }
-
-
-
