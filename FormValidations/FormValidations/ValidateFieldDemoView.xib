@@ -31,9 +31,6 @@
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
-                    <connections>
-                        <action selector="didEndEditing:" destination="-1" eventType="editingDidEnd" id="MA0-su-A7i"/>
-                    </connections>
                 </textField>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Sw-uR-d3I" customClass="ValidationField" customModule="FormValidations" customModuleProvider="target">
                     <rect key="frame" x="37" y="146" width="300" height="38"/>
@@ -43,9 +40,6 @@
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
-                    <connections>
-                        <action selector="didEndEditing:" destination="-1" eventType="editingDidEnd" id="PtG-3e-wnM"/>
-                    </connections>
                 </textField>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Phone" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aCc-4e-I19" customClass="ValidationField" customModule="FormValidations" customModuleProvider="target">
                     <rect key="frame" x="37" y="192" width="300" height="38"/>
@@ -55,9 +49,6 @@
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
-                    <connections>
-                        <action selector="didEndEditing:" destination="-1" eventType="editingDidEnd" id="kYQ-mh-yDJ"/>
-                    </connections>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TS4-Aq-oxo">
                     <rect key="frame" x="37" y="260" width="130" height="38"/>
