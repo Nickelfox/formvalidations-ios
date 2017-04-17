@@ -49,17 +49,23 @@ class ValidationField: UITextField {
     func validateInputSilently(){
         let attempt:(isValid: Bool, error: String?) = validateField()
         self.error = attempt.error
-        if attempt.isValid {
-            decorateForValidInput()
-        } else {
-            decorateForInvalidInput()
-        }
+        decorate(attempt.isValid)
     }
     
     //MARK: Helper Methods
     
+    func decorate(_ isValid: Bool?) {
+        self.layer.borderWidth = 0.5
+        guard let isValid = isValid else { self.layer.borderColor = UIColor.clear.cgColor; return }
+        if isValid {
+            self.layer.borderColor = UIColor.green.cgColor
+        } else {
+            self.layer.borderColor = UIColor.red.cgColor
+        }
+    }
+    
     func handleTextFieldDidBeginEditing(notification: NSNotification) {
-        self.decorateForDefault()
+        self.decorate(nil)
     }
     
     func handleTextFieldDidChange(notification: NSNotification) {
@@ -68,21 +74,6 @@ class ValidationField: UITextField {
     
     func handleTextFieldDidEndEditing(notification: NSNotification) {
         self.validateInputSilently()
-    }
-    
-    func decorateForValidInput() {
-        self.layer.borderColor = UIColor.green.cgColor
-        self.layer.borderWidth = 1.0
-    }
-    
-    func decorateForInvalidInput() {
-        self.layer.borderColor = UIColor.red.cgColor
-        self.layer.borderWidth = 1.0
-    }
-    
-    func decorateForDefault() {
-        self.layer.borderColor = UIColor.clear.cgColor
-        self.layer.borderWidth = 0.5
     }
 }
 

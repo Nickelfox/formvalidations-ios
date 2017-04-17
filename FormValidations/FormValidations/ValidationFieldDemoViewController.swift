@@ -8,43 +8,28 @@
 
 import UIKit
 
-class ValidationFieldDemoViewController: UIViewController {
-// TextFields
-    @IBOutlet var nameTextField: ValidationField!
-    @IBOutlet var emailTextField: ValidationField!
-    @IBOutlet var phoneTextField: ValidationField!
+class ValidationFieldDemoViewController: UIViewController{
+    @IBOutlet var nameTextField: UITextField!
+    @IBOutlet var emailTextField: UITextField!
+    @IBOutlet var phoneTextField: UITextField!
     
-// ErrorMessage Label
     @IBOutlet var errorMessageLabel: UILabel!
+    let forms = Forms()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTextField()
+        setupTextFields()
     }
     
-    func setupTextField() {
+    func setupTextFields() {
         displayView()
-        nameTextField.validator = NameValidation()
-        emailTextField.validator = EmailValidation()
-        phoneTextField.validator = PhoneValidation()
-    }
-    
-    @IBAction func didEndEditing(_ sender: Any) {
-        nameTextField.validateInputSilently()
-        errorMessageLabel.text = nameTextField.error
+        forms.registerField(textField: nameTextField, validator: NameValidation())
+        forms.registerField(textField: emailTextField, validator: EmailValidation())
+        forms.registerField(textField: phoneTextField, validator: PhoneValidation())
     }
     
     @IBAction func handleValidateTapped(_ sender: Any) {
-    }
-    
-    @IBAction func handleResetTapped(_ sender: Any) {
-        reset()
-    }
-    
-    func reset() {
-        nameTextField.text = ""; emailTextField.decorateForDefault()
-        emailTextField.text = ""; emailTextField.decorateForDefault()
-        phoneTextField.text = ""; phoneTextField.decorateForDefault()
+        forms.validateAllFields(self)
     }
     
     func displayView() {
@@ -52,4 +37,64 @@ class ValidationFieldDemoViewController: UIViewController {
         self.view = validateView
     }
 }
+
+extension ValidationFieldDemoViewController: ValidationDelegate {
+    func isValidationSucessfull() {
+        removeErrors()
+    }
+    func isValidationFailed(_ errors: [String]) {
+        print(errors)
+    }
+    
+    func removeErrors() {
+        errorMessageLabel.text = ""
+    }
+}
+
+
+
+//class ValidationFieldDemoViewController: UIViewController {
+//// TextFields
+//    @IBOutlet var nameTextField: ValidationField!
+//    @IBOutlet var emailTextField: ValidationField!
+//    @IBOutlet var phoneTextField: ValidationField!
+//    
+//// ErrorMessage Label
+//    @IBOutlet var errorMessageLabel: UILabel!
+//    
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        setupTextField()
+//    }
+//    
+//    func setupTextField() {
+//        displayView()
+//        nameTextField.validator = NameValidation()
+//        emailTextField.validator = EmailValidation()
+//        phoneTextField.validator = PhoneValidation()
+//    }
+//    
+//    @IBAction func didEndEditing(_ sender: Any) {
+//        nameTextField.validateInputSilently()
+//        errorMessageLabel.text = nameTextField.error
+//    }
+//    
+//    @IBAction func handleValidateTapped(_ sender: Any) {
+//    }
+//    
+//    @IBAction func handleResetTapped(_ sender: Any) {
+//        reset()
+//    }
+//    
+//    func reset() {
+//        nameTextField.text = ""; emailTextField.decorate(nil)
+//        emailTextField.text = ""; emailTextField.decorate(nil)
+//        phoneTextField.text = ""; phoneTextField.decorate(nil)
+//    }
+//    
+//    func displayView() {
+//        let validateView = Bundle.main.loadNibNamed("ValidateFieldDemoView", owner: self, options: nil)?.first as! UIView
+//        self.view = validateView
+//    }
+//}
 
