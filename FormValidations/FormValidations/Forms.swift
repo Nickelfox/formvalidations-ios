@@ -15,7 +15,6 @@ protocol ValidationDelegate: class {
 }
 
 class Forms {
-    
     var validationRules: [ValidationRule] = []
     var validationErrors: [String] = []
     

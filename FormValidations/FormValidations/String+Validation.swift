@@ -130,6 +130,7 @@ extension String {
         range.length = 1
         var verificationChar = unichar()
         (digitString as NSString).getCharacters(&verificationChar, range: range)
+        print((unicharTo(int: verificationChar)%10) == verification)
         return (unicharTo(int: verificationChar)%10) == verification
     }
     

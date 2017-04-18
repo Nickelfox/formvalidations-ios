@@ -19,7 +19,7 @@ class ValidationField: UITextField {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        initialize()
+        //initialize()
     }
     
     //MARK: Notification
@@ -73,7 +73,7 @@ class ValidationField: UITextField {
     }
     
     func handleTextFieldDidEndEditing(notification: NSNotification) {
-        self.validateInputSilently()
+        //self.validateInputSilently()
     }
 }
 

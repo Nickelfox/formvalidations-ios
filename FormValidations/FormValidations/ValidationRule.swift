@@ -21,7 +21,6 @@ class ValidationRule {
     func validateField() -> (Bool, String?) {
         guard let text = textField.text else { return (false, nil) }
         return rule.validate(text)
-        
     }
     
 }

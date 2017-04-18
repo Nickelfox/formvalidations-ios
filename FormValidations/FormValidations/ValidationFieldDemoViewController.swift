@@ -12,6 +12,7 @@ class ValidationFieldDemoViewController: UIViewController{
     @IBOutlet var nameTextField: UITextField!
     @IBOutlet var emailTextField: UITextField!
     @IBOutlet var phoneTextField: UITextField!
+    @IBOutlet var ccNumberTextField: UITextField!
     
     @IBOutlet var errorMessageLabel: UILabel!
     let forms = Forms()
@@ -21,11 +22,17 @@ class ValidationFieldDemoViewController: UIViewController{
         setupTextFields()
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        print("didReceiveMemoryWarning")
+    }
+    
     func setupTextFields() {
         displayView()
-        forms.registerField(textField: nameTextField, validator: NameValidation())
-        forms.registerField(textField: emailTextField, validator: EmailValidation())
-        forms.registerField(textField: phoneTextField, validator: PhoneValidation())
+        //forms.registerField(textField: nameTextField, validator: NameValidation())
+        //forms.registerField(textField: emailTextField, validator: EmailValidation())
+        //forms.registerField(textField: phoneTextField, validator: PhoneValidation())
+        forms.registerField(textField: ccNumberTextField, validator: CCNumberValidation())
     }
     
     @IBAction func handleValidateTapped(_ sender: Any) {
@@ -43,7 +50,10 @@ extension ValidationFieldDemoViewController: ValidationDelegate {
         removeErrors()
     }
     func isValidationFailed(_ errors: [String]) {
-        print(errors)
+        for error in errors {
+            errorMessageLabel.text?.append(error)
+        }
+        //print(errors)
     }
     
     func removeErrors() {
