@@ -119,28 +119,59 @@ extension String {
         return true
     }
     
-    func isValidCreditCardNumber () -> Bool {
-        let digitString = extractDigits(from: self as String)
-        if digitString.characters.count < 12 || digitString.characters.count > 20 {
-            return false
+//    func isValidCreditCardNumber () -> Bool {
+//        let digitString = extractDigits(from: self as String)
+//        if digitString.characters.count < 12 || digitString.characters.count > 20 {
+//            return false
+//        }
+//        let verification: Int = luhnAlgorithm(digitString)
+//        var range = NSRange()
+//        range.location = digitString.characters.count - 1
+//        range.length = 1
+//        var verificationChar = unichar()
+//        (digitString as NSString).getCharacters(&verificationChar, range: range)
+//        print((unicharTo(int: verificationChar)%10) == verification)
+//        return (unicharTo(int: verificationChar)%10) == verification
+//    }
+    
+    func isValidCreditCardNumber() -> Bool {
+        var index: Int = 0
+        var oddSum: Int = 0
+        var evenSum: Int = 0
+        let digit = String(self.characters.reversed())
+        let digitChars = digit.characters
+        for char in digitChars {
+            index += 1
+            if let intChar = Int(String(char)) {
+                if index % 2 != 0 {
+                    oddSum += intChar
+                } else {
+                    let doubledValue = intChar * 2
+                    if doubledValue > 9 {
+                        evenSum += digitSum(digit: doubledValue)
+                    } else {
+                        evenSum += doubledValue
+                    }
+                }
+            }
         }
-        let verification: Int = luhnAlgorithm(digitString)
-        var range = NSRange()
-        range.location = digitString.characters.count - 1
-        range.length = 1
-        var verificationChar = unichar()
-        (digitString as NSString).getCharacters(&verificationChar, range: range)
-        print((unicharTo(int: verificationChar)%10) == verification)
-        return (unicharTo(int: verificationChar)%10) == verification
+        if (oddSum+evenSum) % 10 == 0 {
+            return true
+        }
+        return false
     }
     
     func isValidCardVerificationCode() -> Bool {
-        var digitString = extractDigits(from: self as String)
+        var digitString = self.digits
         let digitStringLength = digitString.characters.count
         if (self.characters.count == digitStringLength) && (digitStringLength == 3 || digitStringLength == 4) {
             return true
         }
         return false
+    }
+    
+    var digits: String {
+        return components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
     }
 }
 
@@ -171,6 +202,16 @@ func luhnAlgorithm (_ cardNumber: String) -> Int {
         i -= 1
     }
     return (10 - (sum%10))%10
+}
+
+func digitSum( digit: Int) -> Int {
+    var digit = digit
+    var sum = 0
+    while digit > 0 {
+        sum += digit % 10
+        digit = digit/10
+    }
+    return sum
 }
 
 func extractDigits(from string: String) -> String {
