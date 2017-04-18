@@ -13,13 +13,14 @@ private var textFieldDidBegainEditingNotification = "UITextFieldTextDidBeginEdit
 private var textFieldDidChangeNotification = "UITextFieldTextDidChangeNotification"
 private var textFieldTextDidEndEditingNotification = "UITextFieldTextDidEndEditingNotification"
 
-class ValidationField: UITextField {
+class ValidationField: UITextField, ValidatableInput {
     var error: String?
     var validator: ValidationProtocol?
+    var isOptional = false
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        //initialize()
+        initialize()
     }
     
     //MARK: Notification
@@ -47,9 +48,9 @@ class ValidationField: UITextField {
     }
     
     func validateInputSilently(){
-        let attempt:(isValid: Bool, error: String?) = validateField()
-        self.error = attempt.error
-        decorate(attempt.isValid)
+        let (isValid, error) = validateField()
+        self.error = error
+        decorate(isValid)
     }
     
     //MARK: Helper Methods
@@ -73,7 +74,7 @@ class ValidationField: UITextField {
     }
     
     func handleTextFieldDidEndEditing(notification: NSNotification) {
-        //self.validateInputSilently()
+        self.validateInputSilently()
     }
 }
 

@@ -41,18 +41,27 @@
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <action selector="handleTextFieldDidEndEditing:" destination="-1" eventType="editingDidEnd" id="gHd-KX-TXK"/>
+                            </connections>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Sw-uR-d3I" customClass="ValidationField" customModule="FormValidations" customModuleProvider="target">
                             <rect key="frame" x="15" y="115" width="315" height="35"/>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <action selector="handleTextFieldDidEndEditing:" destination="-1" eventType="editingDidEnd" id="7Fh-2c-kzW"/>
+                            </connections>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Phone" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aCc-4e-I19" customClass="ValidationField" customModule="FormValidations" customModuleProvider="target">
                             <rect key="frame" x="15" y="160" width="315" height="35"/>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <action selector="handleTextFieldDidEndEditing:" destination="-1" eventType="editingDidEnd" id="S1K-IE-CC2"/>
+                            </connections>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Credit Card Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eCB-gd-xD7" customClass="ValidationField" customModule="FormValidations" customModuleProvider="target">
                             <rect key="frame" x="15" y="205" width="315" height="35"/>

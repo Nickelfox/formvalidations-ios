@@ -9,14 +9,14 @@
 import UIKit
 
 class ValidationFieldDemoViewController: UIViewController{
-    @IBOutlet var nameTextField: UITextField!
-    @IBOutlet var emailTextField: UITextField!
-    @IBOutlet var phoneTextField: UITextField!
-    @IBOutlet var ccNumberTextField: UITextField!
+    @IBOutlet var nameTextField: ValidationField!
+    @IBOutlet var emailTextField: ValidationField!
+    @IBOutlet var phoneTextField: ValidationField!
+    @IBOutlet var ccNumberTextField: ValidationField!
     
     @IBOutlet var errorMessageLabel: UILabel!
-    let forms = Forms()
     
+    let form = Form()
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTextFields()
@@ -29,35 +29,25 @@ class ValidationFieldDemoViewController: UIViewController{
     
     func setupTextFields() {
         displayView()
-        //forms.registerField(textField: nameTextField, validator: NameValidation())
-        //forms.registerField(textField: emailTextField, validator: EmailValidation())
-        //forms.registerField(textField: phoneTextField, validator: PhoneValidation())
-        forms.registerField(textField: ccNumberTextField, validator: CCNumberValidation())
+        nameTextField.validator = NameValidator()
+        emailTextField.validator = EmailValidator()
+        phoneTextField.validator = PhoneValidator()
+        
+        form.inputs = [nameTextField, emailTextField, phoneTextField]
+    }
+    @IBAction func handleTextFieldDidEndEditing(_ sender: Any) {
+        let (isValid, errors) = self.form.validate()
+        print("isValid: \(isValid)")
+        print("errors: \(errors)")
     }
     
     @IBAction func handleValidateTapped(_ sender: Any) {
-        forms.validateAllFields(self)
+        
     }
     
     func displayView() {
         let validateView = Bundle.main.loadNibNamed("ValidateFieldDemoView", owner: self, options: nil)?.first as! UIView
         self.view = validateView
-    }
-}
-
-extension ValidationFieldDemoViewController: ValidationDelegate {
-    func isValidationSucessfull() {
-        removeErrors()
-    }
-    func isValidationFailed(_ errors: [String]) {
-        for error in errors {
-            errorMessageLabel.text?.append(error)
-        }
-        //print(errors)
-    }
-    
-    func removeErrors() {
-        errorMessageLabel.text = ""
     }
 }
 
