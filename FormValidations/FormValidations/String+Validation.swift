@@ -135,23 +135,21 @@ extension String {
 //    }
     
     func isValidCreditCardNumber() -> Bool {
+        if digitString.characters.count < 12 || digitString.characters.count > 20 {
+            return false
+        }
         var index: Int = 0
         var oddSum: Int = 0
         var evenSum: Int = 0
-        let digit = String(self.characters.reversed())
-        let digitChars = digit.characters
-        for char in digitChars {
+        let digitChars = digitString.characters
+        for char in digitChars.reversed() {
             index += 1
             if let intChar = Int(String(char)) {
                 if index % 2 != 0 {
                     oddSum += intChar
                 } else {
                     let doubledValue = intChar * 2
-                    if doubledValue > 9 {
-                        evenSum += digitSum(digit: doubledValue)
-                    } else {
-                        evenSum += doubledValue
-                    }
+                    evenSum += digitSum(digit: doubledValue)
                 }
             }
         }
@@ -162,7 +160,7 @@ extension String {
     }
     
     func isValidCardVerificationCode() -> Bool {
-        var digitString = self.digits
+        var digitString = self.digitString
         let digitStringLength = digitString.characters.count
         if (self.characters.count == digitStringLength) && (digitStringLength == 3 || digitStringLength == 4) {
             return true
@@ -170,7 +168,7 @@ extension String {
         return false
     }
     
-    var digits: String {
+    var digitString: String {
         return components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
     }
 }

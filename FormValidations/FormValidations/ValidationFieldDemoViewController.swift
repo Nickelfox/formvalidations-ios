@@ -13,6 +13,8 @@ class ValidationFieldDemoViewController: UIViewController{
     @IBOutlet var emailTextField: ValidationField!
     @IBOutlet var phoneTextField: ValidationField!
     @IBOutlet var ccNumberTextField: ValidationField!
+    @IBOutlet var pinCodeTextField: ValidationField!
+
     
     @IBOutlet var errorMessageLabel: UILabel!
     
@@ -33,8 +35,9 @@ class ValidationFieldDemoViewController: UIViewController{
         emailTextField.validator = EmailValidator()
         phoneTextField.validator = PhoneValidator()
         ccNumberTextField.validator = CCNumberValidator()
+        pinCodeTextField.validator = PinCodeValidator()
         
-        form.inputs = [nameTextField, emailTextField, phoneTextField, ccNumberTextField]
+        form.inputs = [nameTextField, emailTextField, phoneTextField, ccNumberTextField, pinCodeTextField]
     }
     @IBAction func handleTextFieldDidEndEditing(_ sender: Any) {
         
@@ -42,6 +45,11 @@ class ValidationFieldDemoViewController: UIViewController{
     
     @IBAction func handleValidateTapped(_ sender: Any) {
         let (isValid, errors) = self.form.validate()
+        if !isValid {
+            for error in errors.reversed() {
+                errorMessageLabel.text = error
+            }
+        }
         print("isValid: \(isValid)")
         print("errors: \(errors)")
     }
