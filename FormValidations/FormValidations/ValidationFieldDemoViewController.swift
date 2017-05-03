@@ -49,6 +49,8 @@ class ValidationFieldDemoViewController: UIViewController{
             for error in errors.reversed() {
                 errorMessageLabel.text = error
             }
+        } else {
+            errorMessageLabel.text = ""
         }
         print("isValid: \(isValid)")
         print("errors: \(errors)")

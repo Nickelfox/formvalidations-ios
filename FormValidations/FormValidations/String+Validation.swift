@@ -18,57 +18,49 @@ private let pinCodeRegx = "\\d{6}"
 
 extension String {
     
-    func isNonEmpty() -> Bool {
-        return (self.characters.count) != 0
-    }
-    
-    func isAlphabetic() -> Bool {
+    var isAlphabetic: Bool {
         if !isEmpty {
             let alphabeticTest = NSPredicate(format: "SELF MATCHES %@", alphabeticRegx)
-            return alphabeticTest.evaluate(with: self)
-        } else {
-            return false
+            return alphabeticTest.evaluate(with:self)
         }
+        return false
     }
     
-    func isNumeric() -> Bool {
-        if isNonEmpty() {
+    var isNumeric: Bool {
+        if !isEmpty {
             let numericTest = NSPredicate(format: "SELF MATCHES %@", numericRegx)
             return numericTest.evaluate(with: self)
-        } else {
-            return false
         }
+        return false
     }
     
-    func isAlphaNumeric() -> Bool {
-        if isNonEmpty() {
+    var isAlphaNumeric: Bool {
+        if !isEmpty {
             let alphaNumericTest = NSPredicate(format: "SELF MATCHES %@", alphaNumericRegx)
             return alphaNumericTest.evaluate(with: self)
-        } else {
-            return false
         }
+        return false
     }
-    
-    func isValidEmail() -> Bool {
-        if isNonEmpty() {
+
+    var isValidEmail: Bool {
+        if !isEmpty {
             let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegx)
             return emailTest.evaluate(with: self)
-        } else {
-            return false
         }
+        return false
     }
     
-    
-    func isValidURL() -> Bool {
-        let url: URL = URL(fileURLWithPath: self as String)
-        if let _ = url.scheme, let _ = url.host {
-            return true
-        } else {
-            return false
+    var isValidURL: Bool {
+        if !isEmpty {
+            let url: URL = URL(fileURLWithPath: self)
+            if let _ = url.scheme, let _ = url.host {
+                return true
+            }
         }
+        return true
     }
-    
-    func isValidPassword() -> Bool {
+
+    var isValidPassword: Bool {
         if !isEmpty {
             let passwordTest = NSPredicate(format: "SELF MATCHES %@", passwordRegx)
             return passwordTest.evaluate(with: self)
@@ -76,7 +68,7 @@ extension String {
         return false
     }
     
-    func isValidPhone() -> Bool {
+    var isValidPhone: Bool {
         if !isEmpty {
             let phoneTest = NSPredicate(format: "SELF MATCHES %@", phoneRegx)
             return phoneTest.evaluate(with: self)
@@ -84,7 +76,7 @@ extension String {
         return false
     }
     
-    func isValidPinCode() -> Bool {
+    var isValidPinCode: Bool {
         if !isEmpty {
             let pinCodeTest = NSPredicate(format: "SELF MATCHES %@", pinCodeRegx)
             return pinCodeTest.evaluate(with: self)
@@ -92,7 +84,7 @@ extension String {
         return false
     }
     
-    func isValidCreditCardExpirationDate() -> Bool {
+    var isValidCreditCardExpirationDate: Bool {
         if self.characters.count < 4 {
             return false
         }
@@ -119,22 +111,7 @@ extension String {
         return true
     }
     
-//    func isValidCreditCardNumber () -> Bool {
-//        let digitString = extractDigits(from: self as String)
-//        if digitString.characters.count < 12 || digitString.characters.count > 20 {
-//            return false
-//        }
-//        let verification: Int = luhnAlgorithm(digitString)
-//        var range = NSRange()
-//        range.location = digitString.characters.count - 1
-//        range.length = 1
-//        var verificationChar = unichar()
-//        (digitString as NSString).getCharacters(&verificationChar, range: range)
-//        print((unicharTo(int: verificationChar)%10) == verification)
-//        return (unicharTo(int: verificationChar)%10) == verification
-//    }
-    
-    func isValidCreditCardNumber() -> Bool {
+    var isValidCreditCardNumber: Bool {
         if digitString.characters.count < 12 || digitString.characters.count > 20 {
             return false
         }
@@ -159,7 +136,7 @@ extension String {
         return false
     }
     
-    func isValidCardVerificationCode() -> Bool {
+    var isValidCardVerificationCode: Bool {
         var digitString = self.digitString
         let digitStringLength = digitString.characters.count
         if (self.characters.count == digitStringLength) && (digitStringLength == 3 || digitStringLength == 4) {
@@ -167,40 +144,12 @@ extension String {
         }
         return false
     }
-    
     var digitString: String {
         return components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
     }
 }
 
 //MARK: Helper Methods
-
-func unicharTo(int value: unichar) -> Int {
-    return Int(value) - .allZeros
-}
-
-func luhnAlgorithm (_ cardNumber: String) -> Int {
-    let length: Int = (cardNumber.characters.count) - 1
-    let buffer = [unichar](repeating: unichar(), count: length)
-    var range = NSRange()
-    range.location = 0
-    range.length = length
-    (cardNumber as NSString).getCharacters(UnsafeMutablePointer(mutating: buffer), range: range)
-    var sum: Int = 0
-    var doubleDigit: Bool = true
-    var i = length - 1
-    while i >= 0 {
-        var value: Int = unicharTo(int: buffer[i])
-        if doubleDigit {
-            value *= 2
-            value = value/10 + value%10
-        }
-        sum += value
-        doubleDigit = !doubleDigit
-        i -= 1
-    }
-    return (10 - (sum%10))%10
-}
 
 func digitSum( digit: Int) -> Int {
     var digit = digit
@@ -212,17 +161,3 @@ func digitSum( digit: Int) -> Int {
     return sum
 }
 
-func extractDigits(from string: String) -> String {
-    var strippedString = String()
-    let scanner = Scanner(string: string)
-    let numbers = CharacterSet(charactersIn: "0123456789")
-    while scanner.isAtEnd == false {
-        var buffer = NSString()
-        if scanner.scanCharacters(from: numbers, into: AutoreleasingUnsafeMutablePointer(&buffer)) {
-            strippedString += buffer as String
-        } else {
-            scanner.scanLocation += 1
-        }
-    }
-    return strippedString
-}

@@ -66,6 +66,7 @@ class ValidationField: UITextField, ValidatableInput {
     }
     
     func handleTextFieldDidBeginEditing(notification: NSNotification) {
+        self.backgroundColor = .white
         self.decorate(nil)
     }
     
@@ -74,6 +75,7 @@ class ValidationField: UITextField, ValidatableInput {
     }
     
     func handleTextFieldDidEndEditing(notification: NSNotification) {
+        self.backgroundColor = UIColor.lightGray
         self.validateInputSilently()
     }
 }
