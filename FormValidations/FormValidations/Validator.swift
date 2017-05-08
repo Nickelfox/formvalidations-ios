@@ -9,13 +9,15 @@
 import Foundation
 
 private let emptyStringError = "Value Required"
+private let firstNameError = "First Name Required"
+private let lastNameError = "Last Name Required"
 private let fullNameError = "First Name and Last Name Required"
 private let nameRequiredError = "Invalid Name"
 private let emailError = "Invalid Email"
 private let phoneError = "Invalid Phone"
 private let alphaNumericError = "Alpha Numeric Value Required"
 private let urlError = "Invalid URL"
-private let passwordError = "Must be of atleast 8 characters"
+private let passwordError = "Password must be Alpha Numeric of atleast 8 characters"
 private let pincodeError = "Invalid PIN Code"
 private let ccExpiryError = "Credit Card Expired"
 private let ccNumberError = "Invalid Credit Card Number"
@@ -34,7 +36,7 @@ class EmptyValidator: ValidationProtocol {
     }
 }
 
-class NameValidator: ValidationProtocol {
+class FullNameValidator: ValidationProtocol {
     func validate(_ value: String) -> (Bool, String?) {
         if !value.isAlphabetic {
             return (false, nameRequiredError)
@@ -44,6 +46,23 @@ class NameValidator: ValidationProtocol {
             return (true, nil)
         }
         return (false, fullNameError)
+    }
+}
+
+class FirstNameValidator: ValidationProtocol {
+    func validate(_ value: String) -> (Bool, String?) {
+        if value.isAlphabetic {
+           return (true, nil)
+        }
+            return (false, nameRequiredError)
+    }
+}
+class LastNameValidator: ValidationProtocol {
+    func validate(_ value: String) -> (Bool, String?) {
+        if value.isAlphabetic {
+            return (true, nil)
+        }
+        return (false, nameRequiredError)
     }
 }
 

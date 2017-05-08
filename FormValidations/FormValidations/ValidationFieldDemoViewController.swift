@@ -31,11 +31,11 @@ class ValidationFieldDemoViewController: UIViewController{
     
     func setupTextFields() {
         displayView()
-        nameTextField.validator = NameValidator()
+        nameTextField.validator = FullNameValidator()
         emailTextField.validator = EmailValidator()
         phoneTextField.validator = PhoneValidator()
         ccNumberTextField.validator = CCNumberValidator()
-        pinCodeTextField.validator = PinCodeValidator()
+        pinCodeTextField.validator = PasswordValidator()
         
         form.inputs = [nameTextField, emailTextField, phoneTextField, ccNumberTextField, pinCodeTextField]
     }

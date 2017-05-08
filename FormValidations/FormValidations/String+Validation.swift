@@ -13,7 +13,7 @@ private let alphaNumericRegx = "[a-zA-Z0-9]+$"
 private let numericRegx = "[0-9]+$"
 private let emailRegx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
 private let phoneRegx = "^\\d{10}$"
-private let passwordRegx = "^(?=.*?[A-Z]).{8,}$"
+private let passwordRegx = "^(?=.*?[A-z]).{8,}$"
 private let pinCodeRegx = "\\d{6}"
 
 extension String {
